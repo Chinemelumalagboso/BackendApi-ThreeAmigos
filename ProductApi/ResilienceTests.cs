@@ -35,10 +35,11 @@ namespace ProductApi.ResilienceTests
         public async Task TestCircuitBreakerPolicy()
         {
             var circuitBreakerPolicy = Policy
-                .Handle<HttpRequestException>()
-                .CircuitBreakerAsync(
-                    handledEventsAllowedBeforeBreaking: 2,
-                    durationOfBreak: TimeSpan.FromSeconds(30));
+    .Handle<HttpRequestException>()
+    .CircuitBreakerAsync(
+        exceptionsAllowedBeforeBreaking: 2,
+        durationOfBreak: TimeSpan.FromSeconds(30));
+
 
             var response = await circuitBreakerPolicy.ExecuteAsync(async () =>
             {
