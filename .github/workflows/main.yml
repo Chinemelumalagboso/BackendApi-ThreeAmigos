@@ -1,39 +1,46 @@
-name: Build, Test, and Deploy to Azure App Service
+name: Build and Deploy to Azure App Service
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Triggers the pipeline when code is pushed to the main branch
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout code
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # Step 2: Set up .NET SDK
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '9.0.x' # Targeted .NET version
 
+    # Step 3: Restore dependencies
     - name: Restore dependencies
       run: dotnet restore
 
+    # Step 4: Build the application
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
-    - name: Run Resilience Test
-      run: echo "Resilience test step"
+    # Step 5: Run tests
+    - name: Run tests
+      run: dotnet test ./ProductApi.Test/ProductApi.Test.csproj --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
 
+    # Step 6: Publish the application
     - name: Publish
       run: dotnet publish --configuration Release --output ./publish
 
+    # Step 7: Deploy to Azure App Service
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'threeamigosapi' 
+        app-name: 'threeamigosapi'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE1 }}
         package: ./publish
