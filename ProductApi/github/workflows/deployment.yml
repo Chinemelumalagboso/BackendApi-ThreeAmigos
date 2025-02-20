@@ -31,7 +31,7 @@ jobs:
 
     # Step 5: Run tests
     - name: Run tests
-      run: dotnet test --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test ./ProductApi.Test/ProductApi.Test.csproj --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
 
     # Step 6: Publish the application
     - name: Publish

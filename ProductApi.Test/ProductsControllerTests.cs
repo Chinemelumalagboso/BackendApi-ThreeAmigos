@@ -33,6 +33,7 @@ namespace ProductApi.Test
             {
                 new Product { Id = 1, Name = "Product1", Price = 10, Description = "Test Product", CategoryId = 1 },
                 new Product { Id = 2, Name = "Product2", Price = 20, Description = "Another Product", CategoryId = 2 }
+                
             });
 
             _context.SaveChanges();
@@ -58,8 +59,6 @@ namespace ProductApi.Test
             var products = okResult.Value as IEnumerable<ProductDto>;
             Assert.IsNotNull(products);
             Assert.AreEqual(2, products.Count());
-        }
-
-        
+        }       
     }
 }
