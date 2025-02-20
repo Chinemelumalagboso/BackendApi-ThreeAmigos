@@ -1,14 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProductApi.Controllers;
 using ProductApi.Data;
 using ProductApi.Dtos;
 using ProductApi.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
+//unit tests
 namespace ProductApi.Test
 {
     [TestClass]
